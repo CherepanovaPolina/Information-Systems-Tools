@@ -1,0 +1,30 @@
+import random
+from datetime import time
+
+import aiogram
+from aiogram import Bot, types
+from aiogram.dispatcher import Dispatcher
+from aiogram.utils import executor
+
+bot = Bot(token='5804548634:AAHvcGvQQlxEbX23Q82PzglOPLca8KblPNE')
+dp = Dispatcher(bot)
+joke = ["А вы знаете почему перед посещением врача нужно отсидеть очередь? Потому что время лечит", "Почему волки не едят бабушек? Они во рту вяжут", "Сергей повесился, теперь он Сережка", "Как зовут волшебника, который обладает всеми стихиями? Универмаг", "Я перестал шутить про маленьких людей, потому что это низко"]
+
+@dp.message_handler(commands=['start'])
+async def proccess_start_command(message: types.Message):
+    await message.reply("Привет!\nХочешь шутку?")
+
+@dp.message_handler(commands=['help'])
+async def proccess_help_command(message: types.Message):
+    await message.reply("Я расскажу тебе шутку!")
+
+@dp.message_handler(commands=['yes'])
+async def proccess_jokeYES_command(message: types.Message):
+    await message.reply(random.choice(joke))
+
+@dp.message_handler(commands=['more'])
+async def proccess_morejoke_command(message: types.Message):
+    await message.reply(random.choice(joke))
+
+if __name__ == '__main__':
+    executor.start_polling(dp)
